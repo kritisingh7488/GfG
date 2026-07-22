@@ -6,13 +6,15 @@ class Solution {
             ans.push_back(temp);
             return;
         }
-        if(i==arr.size()|| target<0){
+        if(target<0){
             return;
         }
-        temp.push_back(arr[i]);
-        helper(arr,target-arr[i],i,temp);
-        temp.pop_back();
-        helper(arr,target,i+1,temp);
+        for(int j=i; j<arr.size();j++){
+            
+            temp.push_back(arr[j]);
+            helper(arr,target-arr[j],j,temp);
+            temp.pop_back();
+        }
         
     }
     vector<vector<int>> targetSumComb(vector<int> &arr, int target) {
