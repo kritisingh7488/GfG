@@ -1,26 +1,19 @@
 class Solution {
   public:
     vector<bool> vi;
-    bool bfs(vector<vector<int>>& edges, int n, int parent){
-        queue<pair<int,int>> q;
-        q.push({n,-1});
+    bool dfs(vector<vector<int>>& edges, int n, int parent){
         vi[n]=1;
-        while(!q.empty()){
-            int parent=q.front().second;
-            int node=q.front().first;
-            q.pop();
-            for(int adji: edges[node]){
-                if(!vi[adji]){
-                    vi[adji]=1;
-                    q.push({adji,node});
-                }
-                else{
-                    if(parent!=adji) return true;
+        for(auto adjacent: edges[n]){
+            if(!vi[adjacent]){
+                if(dfs(edges,adjacent,n)) return true;
+            }
+            else{
+                if(parent!=adjacent){
+                    return true;
                 }
             }
         }
         return false;
-        
     }
     bool isCycle(int V, vector<vector<int>>& edges) {
         
@@ -40,7 +33,7 @@ class Solution {
 
             if(!vi[i]) {
 
-                if(bfs(adj, i, -1))
+                if(dfs(adj, i, -1))
                     return true;
             }
         }
